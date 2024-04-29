@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include<stdlib.h>
+int main() {
+int num, keynum, found = 0, position = -1;
+printf("Enter the number of elements: ");
+scanf("%d", &num);
+int array[num];
+printf("Enter the elements:\n");
+for (int i = 0; i < num; i++) {
+scanf("%d", &array[i]);
+}
+printf("Enter the key element to search: ");
+scanf("%d", &keynum);
+for (int i = 0; i < num; i++) {
+if (keynum == array[i]) {
+found = 1;
+position = i;
+break;
+}
+}
+if (found == 1) {
+printf("Element found at position %d in the array.\n", position + 1);
+} else {
+printf("Element not found in the array.\n");
+}
+return 0;
+}
