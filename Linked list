@@ -1,0 +1,159 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+ int data;
+ struct Node* link;};
+struct Node* header = NULL;
+struct Node* createNode(int value) {
+ struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+ if (newNode != NULL) {
+ newNode->data = value;
+ newNode->link = NULL;}
+ return newNode;}
+void traverse() {
+ if (header->link == NULL) {
+ printf("Linked List is empty.\n");
+ return;}
+ struct Node* ptr = header->link;
+ printf("Linked List elements: ");
+ while (ptr != NULL) {
+ printf("%d ", ptr->data);
+ ptr = ptr->link;}
+ printf("\n");}
+void insertAtFront(int value) {
+ struct Node* new = createNode(value);
+ if (new == NULL) {
+ printf("Insertion not possible. Insufficient memory.\n");
+ return;}
+ new->link = header->link;
+ header->link = new;}
+void insertAtEnd(int value) {
+ struct Node* new = createNode(value);
+ if (new == NULL) {
+ printf("Insufficient memory for insertion at end.\n");
+ return;}
+ struct Node* ptr = header;
+ while (ptr->link != NULL) {
+ ptr = ptr->link;}
+ ptr->link = new;}
+void insertAtAnyPosition(int key, int value) {
+ struct Node* new = createNode(value);
+ if (new == NULL) {
+ printf("Insufficient memory for insertion at any position.\n");
+ return;}
+ struct Node* ptr = header;
+ while (ptr->link != NULL && ptr->link->data != key) {
+ ptr = ptr->link;}
+ if (ptr->link == NULL) {
+ printf("Key not available for insertion.\n");
+ free(new);
+ return;}
+ new->link = ptr->link;
+ ptr->link = new;}
+struct Node* deleteFront() {
+ struct Node* ptr = header->link;
+ if (ptr == NULL) {
+ printf("Empty list. Cannot delete from the front.\n");
+ return NULL;}
+ struct Node* newHeader = ptr->link;
+header->link = newHeader;
+ return ptr;}
+struct Node* deleteEnd() {
+ struct Node* ptr = header->link;
+ if (ptr == NULL) {
+ printf("Empty list. Cannot delete from the end.\n");
+ return NULL;}
+ struct Node* prev = NULL;
+ while (ptr->link != NULL) {
+ prev = ptr;
+ ptr = ptr->link;}
+ if (prev != NULL) {
+ prev->link = NULL;
+ } else {
+ header->link = NULL;}
+ return ptr;}
+struct Node* deleteAnyPosition(int key) {
+ struct Node* ptr1 = header;
+ struct Node* ptr = ptr1->link;
+ if (ptr == NULL) {
+ printf("Empty list. Cannot delete from any position.\n");
+ return NULL;}
+ while (ptr->data != key && ptr != NULL) {
+ ptr1 = ptr;
+ ptr = ptr->link;}
+ if (ptr == NULL) {
+ printf("Key not present for deletion.\n");
+ return NULL; }
+ ptr1->link = ptr->link;
+ return ptr;}
+void freeList() {
+ struct Node* ptr = header->link;
+ while (ptr != NULL) {
+ struct Node* temp = ptr;
+ ptr = ptr->link;
+ free(temp);}
+ free(header);}
+int main() {
+ header = createNode(0);
+ int option, value, key;
+ struct Node* deletedNode;
+ do {
+ printf("Choose an option:\n");
+ printf("1. Traverse\n2. Insert at Front\n3. Insert at End\n");
+ printf("4. Insert at Any Position\n5. Delete Front\n6. Delete End\n");
+ printf("7. Delete at Any Position\n8. Exit\n");
+ scanf("%d", &option);
+ switch (option) {
+ case 1:
+ traverse();
+ break;
+ case 2:
+ printf("Enter the value to insert at front: ");
+ scanf("%d", &value);
+ insertAtFront(value);
+ break;
+ case 3:
+ printf("Enter the value to insert at end: ");
+ scanf("%d", &value);
+ insertAtEnd(value);
+ break;
+ case 4:
+ printf("Enter the key after which to insert: ");
+ scanf("%d", &key);
+ printf("Enter the value to insert: ");
+ scanf("%d", &value);
+ insertAtAnyPosition(key, value);
+ break;
+ case 5:
+ deletedNode = deleteFront();
+ if (deletedNode != NULL) {
+ printf("Deleted front element: %d\n", deletedNode->data);
+ free(deletedNode);
+ }
+ break;
+ case 6:
+ deletedNode = deleteEnd();
+ if (deletedNode != NULL) {
+ printf("Deleted end element: %d\n", deletedNode->data);
+ free(deletedNode);
+ }
+ break;
+ case 7:
+ printf("Enter the key to delete: ");
+ scanf("%d", &key);
+ deletedNode = deleteAnyPosition(key);
+ if (deletedNode != NULL) {
+ printf("Deleted element at key %d: %d\n", key, deletedNode->data);
+ free(deletedNode);
+ }
+ break;
+ case 8:
+ freeList();
+ printf("Exiting the program.\n");
+ break;
+ default:
+ printf("Invalid option. Please try again.\n");
+ }
+ } while (option != 8);
+ return 0;
+}
