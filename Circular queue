@@ -1,0 +1,98 @@
+#include <stdio.h>
+#define MAX 10
+
+void enQ(int);
+void deQ();
+void dis();
+
+int cque[MAX];
+int front = -1;
+int rear=-1;
+
+int main()
+{
+int choice,value,con;
+printf("Enter do you want to continue 1. Yes \n 0. No \n");
+scanf("%d",&con);	
+while (con=1)
+{
+printf("Menu:\n 1. Insert \n 2. Delete \n 3. Display \n 4. Exit \n ");
+printf("Enter your choice ");
+scanf("%d",&choice);
+if (choice==1)
+{
+printf("Enter value to be inserted");
+scanf("%d",&value);
+enQ(value);
+}
+else if (choice==2)
+{
+deQ();
+}
+else if(choice==3)
+{
+dis();
+}
+else if(choice==4)
+{
+con=0;
+printf("Exiting .........");
+}
+}
+}
+void enQ(int value)
+{
+if ((front==0  && rear==MAX-1)||(front==rear+1))
+{
+printf("\n No More Insertion please!!");
+}
+else
+{
+if (rear==MAX-1  && front!=0)
+rear=-1;
+cque[++rear] = value;
+printf("Inserted");
+
+if (front==-1)
+front=0;
+}
+}
+
+void deQ()
+{
+if (front==-1&&rear==-1)
+{
+printf("Deletion not possible");
+}
+
+else
+{printf("Element Deleted");
+if (front==MAX)
+front=0;
+if(front-1==rear)
+{
+rear=rear-1;
+front=rear;
+}
+}
+}
+void dis()
+{
+int i=0;
+
+	if (front==-1)
+	printf("The elements of circular queue are \n");
+	if (front<=rear)
+{
+while (i<=rear)
+printf("%d",cque[i++]);
+}
+
+else{
+	while (i<=MAX-1)
+	printf("%d",cque[i++]);
+	i=0;
+	while (i<=rear)
+	printf("%d",cque[i++]);
+}
+}
