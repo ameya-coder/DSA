@@ -1,0 +1,40 @@
+#include<stdio.h>
+#define max 100
+
+struct sparse{
+	int row;
+	int col;
+	int val;
+	}
+	ele[max];
+	
+
+
+int main(){
+	int i,j;
+	printf("Enter the number of rows\n");
+	scanf("%d",&ele[0].row);
+	printf("Enter the number of columns\n");
+	scanf("%d",&ele[0].col);
+	printf("Enter the values of sparse matrix\n");
+	int n=ele[0].row*ele[0].col;
+	int a,c=0;
+	for(i=1;i<=ele[0].row;i++){
+		for(j=0;j<ele[0].col;j++){
+		
+		scanf("%d",&a);
+		if (a!=0){
+			c++;
+			ele[c].row=i;
+			ele[c].col=j;
+			ele[c].val=a;
+		}
+	}
+}
+	
+ele[0].val=c;
+int k;
+for(k=0;k<=c;k++){
+		printf("\n row: %d column: %d value: %d",ele[k].row,ele[k].col,ele[k].val);}
+		}
+		
