@@ -1,0 +1,78 @@
+#include<stdio.h>
+#define MAX_SIZE 10
+int queue[MAX_SIZE];
+int front=0;
+int rear=-1;
+
+void enQueue(int value){
+	if (rear<MAX_SIZE-1){
+		queue[++rear]=value;
+		printf("Pushed %d onto the queue\n",value);
+	}else{
+		printf("Queue is full.Cannot enqueue %d \n",value);
+	}
+}
+
+int deQueue(){
+	if (front<=rear){
+		int dequeuedValue=queue[front++];
+		printf("Dequeued %d from the queue\n",dequeuedValue);
+		return dequeuedValue;
+	}else{
+		printf("Queue is empty.\n");
+		return -1;
+	}
+}
+
+void display(){
+	if (front<=rear){
+		printf("Queue contents:");
+		for(int i=front;i<=rear;i++){
+			printf("%d",queue[i]);
+		}printf("\n");
+	}
+	else{
+		printf("Stack is empty.\n");
+	}
+}
+
+
+int main(){
+	int choice,value;
+	
+	
+	while(1){
+		printf("Stack Menu:\n");
+		printf("1.Enqueue\n");
+		printf("2.Dequeue\n");
+		printf("3.Display\n");
+		printf("4.Quit\n");
+		printf("Enter your choice:");
+		scanf("%d",&choice);
+		
+		switch(choice){
+			case 1:
+				printf("Enter value to push:");
+				scanf("%d",&value);
+				enQueue(value);
+				break;
+				
+			case 2:
+				deQueue();
+				break;
+				
+			case 3:
+				display();
+				break;
+				
+			case 4:
+				printf("Exiting program");
+				return 0;
+				
+			default:
+				printf("Invalid choice.Please enter a valid option.");
+		}
+	}
+	return 0;
+}
+
